@@ -1,0 +1,16 @@
+Download the latest versioin of JQuery on the JQuery Web page
+
+---------
+
+$(document).ready(function () {
+	// it runs the function when the DOM is loaded
+	// The document tree has been parsed
+	// :)
+});
+
+Another option to the code above is:
+
+$(function () {
+	// your code
+	$('#id');
+});
