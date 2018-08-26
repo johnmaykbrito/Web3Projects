@@ -15,15 +15,14 @@ public class Funcionario {
 
     private String nome;
     private Double salario;
-    private Date dataNascimento;
+    private String dataNascimento;
 
-    public Funcionario(String nome, Double salario, Date dataNascimento) {
+    public Funcionario(String nome, Double salario, String dataNascimento) {
         this.nome = nome;
         this.salario = salario;
         this.dataNascimento = dataNascimento;
     }
 
-    
     public String getNome() {
         return nome;
     }
@@ -40,14 +39,12 @@ public class Funcionario {
         this.salario = salario;
     }
 
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-    
-    
-    
+
 }

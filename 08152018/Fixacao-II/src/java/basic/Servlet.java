@@ -25,31 +25,35 @@ import org.json.JSONObject;
 @MultipartConfig
 public class Servlet extends HttpServlet {
 
-    static ArrayList<Funcionario> funcionarios = new ArrayList<>();    
-    
+    static ArrayList<Funcionario> funcionarios = new ArrayList<>();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/plain;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             String nome = request.getParameter("name");
-            double sal = Double.parseDouble(request.getParameter("sal"));
-            String dataN = request.getParameter("dataNasc");
-            
-            Date date = new Date();
-            try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(dataN);
-            }catch(Exception ex){
-                System.out.println("Deu merda");
-            }
-            
-            Funcionario funcionario = new Funcionario(nome, sal, date); 
+            double salario = Double.parseDouble(request.getParameter("sal"));
+            String data = request.getParameter("dataNasc");
+
+            data = data.replace('-', '/');
+
+            // I've found a simpler solution using just a string
+//            Date date = new Date();
+//            try {
+//            date = new SimpleDateFormat("yyyy-MM-dd").parse(dataN);
+//            }catch(Exception ex){
+//                System.out.println("ERRO DE CONVERSÃO DE DATA");
+//            }
+            Funcionario funcionario = new Funcionario(nome, salario, data);
             funcionarios.add(funcionario);
-            
-            if (!funcionarios.isEmpty()) System.out.println(funcionarios.size());
-            
-            JSONObject json = new JSONObject(funcionario);
-            out.println(json.toString());
+
+            if (funcionarios.isEmpty()) {
+                out.println("{}");
+            } else {
+                JSONObject json = new JSONObject(funcionario);
+                out.println(json.toString());
+            }
         }
     }
 
