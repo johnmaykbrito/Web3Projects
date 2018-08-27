@@ -1,4 +1,11 @@
 var idF = 0;
+var totalFuncionarios = 0;
+
+function removeFuncionario(idFuncionario) {
+    $('#' + idFuncionario).remove();
+    $('#legend').text('Funcionários(' + --totalFuncionarios + ')').css("font-weight", "bold");
+    semFuncionarios();
+}
 
 function cadastrar() {
     var xhr = new XMLHttpRequest();
@@ -8,14 +15,16 @@ function cadastrar() {
             if (Object.keys(obj).length === 0) {
                 alert("JSON vazio");
             } else {
-                var div = $('#funcionarios');
-                div.append("<tr id='" + idF + "'>\n\
-                <td>" + idF++ + " - " + obj.nome + "</td>\n\
+                var table = $('#funcionarios');
+                table.append("<tr class='funcLine' id='" + idF++ + "'>\n\
+                <td>" + obj.nome + "</td>\n\
                 <td>" + obj.dataNascimento + "</td>\n\
                 <td>" + obj.salario + "</td>\n\
                 <td><input type='button' value='Editar'/><br/>\n\
-                <input type='button' value='Remover'/></td>\n\
+                <input type='button' value='Remover' onclick='removeFuncionario(" + (idF - 1) + ")'/></td>\n\
                 </tr>");
+                $('#legend').text('Funcionários(' + ++totalFuncionarios + ')').css("font-weight", "bold");
+                semFuncionarios();
             }
         }
     };
@@ -30,9 +39,19 @@ function validar() {
     return false;
 }
 
+function semFuncionarios() {
+    if (totalFuncionarios === 0) {
+        var table = $('#funcionarios');
+        table.append("<p id='noFunc'>Não há funcionários cadastrados</p>");
+    } else {
+        $('#noFunc').remove();
+    }
+}
+
 function init() {
     var formulario = document.getElementById("formulario");
     formulario.onsubmit = validar;
+    semFuncionarios();
 }
 
 onload = init;
