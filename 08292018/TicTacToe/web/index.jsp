@@ -9,26 +9,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="index.css"/>
+        <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="index.js"></script>
+        <link rel="stylesheet" type="text/css" href="index.css"/>
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Tic Tac Toe</h1>
+        <h1>Idosa's Game</h1>
 
         <div id="">
             <table>
-                <caption>Campo de jogo</caption>
-                <thead>
-                    <tr><th></th><th></th><th></th></tr>
-                </thead>
                 <tbody id="tb">
                     <tr><td id="a"></td><td id="b"></td><td id="c"></td></tr>
                     <tr><td id="d"></td><td id="e"></td><td id="f"></td></tr>
                     <tr><td id="g"></td><td id="h"></td><td id="i"></td></tr>
                 </tbody>
-                <button id="botao" type="button">Enviar</button>
             </table>
         </div>
+        <button id="botao" type="button" onclick="location.reload()">Play Again</button>
     </body>
 </html>

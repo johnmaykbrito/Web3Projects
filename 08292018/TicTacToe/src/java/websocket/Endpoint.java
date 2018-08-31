@@ -22,7 +22,7 @@ public class Endpoint {
     
     public static int contador = 0;
     
-    @OnOpen
+//    @OnOpen
     public void onOpen(Session session ){
         try {
             session.getBasicRemote().sendText(Integer.toString(contador++));
@@ -32,9 +32,11 @@ public class Endpoint {
     }
     
     @OnMessage
-    public void onMessage(String string, Session session){
+    public void onMessage(String cell, Session session){
+        String json = "{\"cell\":\"" + cell + "\", \"counter\":\"" +  Integer.toString(contador++) + "\"}";
         try {
-            session.getBasicRemote().sendText("jogodavelha/On Open");  
+            session.getBasicRemote().sendText(json);
+            System.out.println(contador);
         } catch (IOException ex) {
             Logger.getLogger(Endpoint.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,39 +1,44 @@
 var ws;
 var grid;
-var bucket = "";
 
+function changeCell(msg) {
+    var json = JSON.parse(msg.data);
+    console.log(json);
+    if ((json.counter % 2) === 0) {
+        if ($('#' + json.cell)[0].style.cssText === "") {
+            $('#' + json.cell).css('background-color', 'red');
+        } else {
+            ws.send("x");
+        }
 
-function jogodavelha(){
-    var tabela = document.querySelector("table:first-child");
-    console.log(tabela);
+    } else {
+        if ($('#' + json.cell)[0].style.cssText === "") {
+            $('#' + json.cell).css('background-color', 'blue');
+        } else {
+            ws.send("x");
+        }
+    }
 }
 
-function sendPlay(e){
-//    alert(e.data);
-    jogodavelha();
-}
-
-function openConn(){
-    var wsUri = "ws://"+ document.location.host + document.location.pathname + "jogodavelha";
+function openConn() {
+    var wsUri = "ws://" + document.location.host + document.location.pathname + "jogodavelha";
     ws = new WebSocket(wsUri);
-    ws.onmessage = sendPlay;
+    ws.onmessage = changeCell;
 }
 
 function send() {
-    alert(this.id);
+    ws.send(this.id);
 }
 
-function preparar(){
-    for (let i = 0 ; i <= 8 ; i++) {
+function preparar() {
+    for (let i = 0; i <= 8; i++) {
         var item = grid[i];
         item.onclick = send;
     }
 }
 
-function init(){
-    var botao = document.getElementById("botao");
-    botao.onclick = openConn;
-    
+function init() {
+    openConn();
     grid = document.querySelectorAll("tbody tr td");
     preparar();
 }
