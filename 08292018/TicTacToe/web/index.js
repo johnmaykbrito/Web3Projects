@@ -1,9 +1,21 @@
 var ws;
 var grid;
 
+function insertExcerpt() {
+    var excerpt
+            = "<tbody id='tb'>" +
+            "<tr><td id='a'></td><td id='b'></td><td id='c'></td></tr>" +
+            "<tr><td id='d'></td><td id='e'></td><td id='f'></td></tr>" +
+            "<tr><td id='g'></td><td id='h'></td><td id='i'></td></tr>" +
+            "</tbody>";
+
+    $('#tb').replaceWith(excerpt);
+    getGrid();
+    preparar();
+}
+
 function changeCell(msg) {
     var json = JSON.parse(msg.data);
-    console.log(json);
     if ((json.counter % 2) === 0) {
         if ($('#' + json.cell)[0].style.cssText === "") {
             $('#' + json.cell).css('background-color', 'red');
@@ -37,9 +49,13 @@ function preparar() {
     }
 }
 
+function getGrid() {
+    grid = document.querySelectorAll("tbody tr td");
+}
+
 function init() {
     openConn();
-    grid = document.querySelectorAll("tbody tr td");
+    getGrid();
     preparar();
 }
 

@@ -6,10 +6,10 @@
 package websocket;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
@@ -21,6 +21,7 @@ import javax.websocket.server.ServerEndpoint;
 public class Endpoint {
     
     public static int contador = 0;
+    public static ArrayList<Session> sessions = new ArrayList<>();
     
 //    @OnOpen
     public void onOpen(Session session ){
@@ -34,9 +35,13 @@ public class Endpoint {
     @OnMessage
     public void onMessage(String cell, Session session){
         String json = "{\"cell\":\"" + cell + "\", \"counter\":\"" +  Integer.toString(contador++) + "\"}";
+        if (!sessions.contains(session)) {
+            sessions.add(session);
+        }
         try {
             session.getBasicRemote().sendText(json);
-            System.out.println(contador);
+            System.out.println(sessions.size());
+            
         } catch (IOException ex) {
             Logger.getLogger(Endpoint.class.getName()).log(Level.SEVERE, null, ex);
         }
