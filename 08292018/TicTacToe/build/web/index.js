@@ -11,7 +11,7 @@ function insertExcerpt() {
 
     $('#tb').replaceWith(excerpt);
     getGrid();
-    preparar();
+    prepare();
 }
 
 function changeCell(msg) {
@@ -42,7 +42,7 @@ function send() {
     ws.send(this.id);
 }
 
-function preparar() {
+function prepare() {
     for (let i = 0; i <= 8; i++) {
         var item = grid[i];
         item.onclick = send;
@@ -56,7 +56,7 @@ function getGrid() {
 function init() {
     openConn();
     getGrid();
-    preparar();
+    prepare();
 }
 
 onload = init;
