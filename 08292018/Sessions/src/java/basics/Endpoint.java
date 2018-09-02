@@ -25,12 +25,13 @@ public class Endpoint {
     @OnMessage
     public void onMessage(Session session, String text) {
         System.out.println("text: " + text);
-        
+
         String room = (String) session.getUserProperties().get("room");
+        System.out.println("room: " + room);
         try {
             for (Session s : session.getOpenSessions()) {
                 if (s.isOpen() && room.equals(s.getUserProperties().get("room"))) {
-                    session.getBasicRemote().sendText("<p>"+text+"</p>");
+                    session.getBasicRemote().sendText("<p>" + text + "</p>");
                 }
             }
 

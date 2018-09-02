@@ -9,17 +9,21 @@
     </head>
     <body>
         <div id="salas">
-            <fieldset style="width: 300px">
-                <legend>Sala de humanos</legend>
-                <button id="humanos" value="humanos" style="width: 100%">Humanos</button>
-            </fieldset>
-            <fieldset style="width: 300px">
-                <legend>Sala de aliens</legend>
-                <button id="aliens" value="aliens" style="width: 100%">Aliens</button>
-            </fieldset>
+            <form>
+                <fieldset style="width: 300px">
+                    <legend>Sala de humanos</legend>
+                    <button id="humanos" value="humanos" type="submit" style="width: 100%">Humanos</button>
+                </fieldset>
+                <fieldset style="width: 300px">
+                    <legend>Sala de aliens</legend>
+                    <button id="aliens" type="submit" value="aliens" style="width: 100%">Aliens</button>
+                </fieldset>
+            </form>
         </div>
         <div id="response">
-            <button id="send" value="peer">Send</button>
+            <form>
+                <button type="submit" id="send" value="peer">Send</button>
+            </form>
         </div>
     </body>
 </html>

@@ -1,32 +1,57 @@
 var ws;
 
+var bHumanos;
+var bAliens;
+var bSend;
+var divResponse;
+var room = "";
+
 function onMessage(evt) {
-    $('#response').append(evt.data);
-    $('#response').show();
+    divResponse.append(evt.data);
+    divResponse.show();
 }
 
 function onOpen() {
-    ws.send("msg");
+    ws.send(room);
     $('#salas').hide();
 }
 
 function run() {
-    var wsUri = "ws://" + document.location.host + document.location.pathname + "sessions/" + this.value;
+    alert(room);
+    var wsUri = "ws://" + document.location.host + document.location.pathname + "sessions/" + room;
     ws = new WebSocket(wsUri);
     ws.onopen = onOpen;
     ws.onmessage = onMessage;
 }
 
 function send() {
-    alert(this.value);
-    ws.send(this.value);
+    ws.send("Opa");
 }
 
 function init() {
-    $('#humanos')[0].onclick = run;
-    $('#aliens')[0].onclick = run;
-    $('#send')[0].onclick = send;
-    $('#response').hide();
+    bHumanos = $('#humanos');
+    bAliens = $('#aliens');
+    bSend = $('#send');
+    divResponse = $('#response');
+    
+    bHumanos.click(function () {
+        room = $(this).val();
+        run();
+        return false;
+    });
+    
+    bAliens.click(function () {
+        room = $(this).val();
+        run();
+        return false;
+    });
+        
+    bSend.click(function () {
+        send();
+        return false;
+    });
+    
+    divResponse.hide();
 }
 
 onload = init;
