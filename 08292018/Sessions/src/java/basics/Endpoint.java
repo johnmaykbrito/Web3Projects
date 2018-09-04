@@ -31,7 +31,7 @@ public class Endpoint {
         try {
             for (Session s : session.getOpenSessions()) {
                 if (s.isOpen() && room.equals(s.getUserProperties().get("room"))) {
-                    session.getBasicRemote().sendText("<p>" + text + "</p>");
+                    s.getBasicRemote().sendText("<p>" + text + "</p>");
                 }
             }
 
