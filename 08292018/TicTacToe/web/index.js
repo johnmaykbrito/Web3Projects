@@ -2,12 +2,11 @@ var ws;
 var grid;
 
 function insertExcerpt() {
-    var excerpt
-            = "<tbody id='tb'>" +
+    var excerpt = $("<tbody id='tb'>" +
             "<tr><td id='a'></td><td id='b'></td><td id='c'></td></tr>" +
             "<tr><td id='d'></td><td id='e'></td><td id='f'></td></tr>" +
             "<tr><td id='g'></td><td id='h'></td><td id='i'></td></tr>" +
-            "</tbody>";
+            "</tbody>");
 
     $('#tb').replaceWith(excerpt);
     getGrid();
@@ -16,6 +15,7 @@ function insertExcerpt() {
 
 function changeCell(msg) {
     var json = JSON.parse(msg.data);
+    console.log($('#' + json.cell)[0].style.cssText);
     if ((json.counter % 2) === 0) {
         if ($('#' + json.cell)[0].style.cssText === "") {
             $('#' + json.cell).css('background-color', 'red');
@@ -30,12 +30,6 @@ function changeCell(msg) {
             ws.send("x");
         }
     }
-}
-
-function openConn() {
-    var wsUri = "ws://" + document.location.host + document.location.pathname + "jogodavelha";
-    ws = new WebSocket(wsUri);
-    ws.onmessage = changeCell;
 }
 
 function send() {
@@ -54,7 +48,17 @@ function getGrid() {
 }
 
 function init() {
-    openConn();
+    
+    $('#tabela_jogo').hide();
+    
+    $('#login').click(function () {
+        var wsUri = "ws://" + document.location.host + document.location.pathname + "jogodavelha/" + this.value;
+        ws = new WebSocket(wsUri);
+        console.log(wsUri);
+        ws.onmessage = changeCell;
+        $('#tabela_jogo').show();
+        $('#login_botao').hide();
+    });
     getGrid();
     prepare();
 }

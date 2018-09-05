@@ -16,14 +16,22 @@
     </head>
     <body>
         <h1>Idosa's Game</h1>
-        <table>
-            <tbody id="tb">
-                <tr><td id="a"></td><td id="b"></td><td id="c"></td></tr>
-                <tr><td id="d"></td><td id="e"></td><td id="f"></td></tr>
-                <tr><td id="g"></td><td id="h"></td><td id="i"></td></tr>
-            </tbody>
-        </table>
-        <br/>
-        <button id="botao" type="button" onclick="insertExcerpt()">Play Again</button>
+        <div id="login_botao">
+            <fieldset>
+                <legend>Sala</legend>
+                <button type="submit" value="sala01" id="login">Entrar</button>
+            </fieldset>
+        </div>
+        <div id="tabela_jogo">
+            <table>
+                <tbody id="tb">
+                    <tr><td id="a"></td><td id="b"></td><td id="c"></td></tr>
+                    <tr><td id="d"></td><td id="e"></td><td id="f"></td></tr>
+                    <tr><td id="g"></td><td id="h"></td><td id="i"></td></tr>
+                </tbody>
+            </table>
+            <br/>
+            <button id="botao" type="button" onclick="insertExcerpt()">Play Again</button>
+        </div>
     </body>
 </html>
