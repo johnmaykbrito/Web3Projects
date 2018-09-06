@@ -23,6 +23,7 @@ public class Endpoint {
     @OnMessage
     public void onMessage(String cell, Session session) {
         String json = "{\"cell\":\"" + cell + "\", \"counter\":\"" + Integer.toString(contador++) + "\"}";
+
         String room = (String) session.getUserProperties().get("room");
 
         try {
