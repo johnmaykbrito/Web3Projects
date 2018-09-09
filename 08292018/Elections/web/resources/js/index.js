@@ -1,18 +1,33 @@
 var ws;
 
-function run() {
-    var wsUri = "ws://" + document.location.host + document.location.pathname + "coders";
+function changeView(e) {
+    console.log(e.data);
+}
+
+function send() {
+    ws.send("voting");
+}
+
+function startSimulation() {
+    var wsUri = "ws://" + document.location.host + document.location.pathname + "election";
     ws = new WebSocket(wsUri);
-    alert("Enviando ao WebSocket...\n" + this.value);
-    ws.send(this.value);
-    ws.onmessage = function(evt) {
-        console.log("Modificado e recebido do WebSocket...\n" + evt.data);
-    };
+    setInterval(send, 5000);
+    ws.onmessage = changeView;
 }
 
-function init() {
-    alert("Olá");
-    $('#button')[0].onclick = run;
-}
-
-onload = init;
+$(document).ready(function () {
+    var vote = $('#vote');
+    var stop = $('#stop');
+    
+    vote.click(function () {
+        startSimulation();
+        $(this).attr("disabled", "disabled");
+        stop.removeAttr("disabled");
+    });
+    
+    stop.click(function () {
+        $(this).attr("disabled", "disabled");
+        vote.removeAttr("disabled");
+        ws.close();
+    });
+});

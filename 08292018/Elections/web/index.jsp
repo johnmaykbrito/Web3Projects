@@ -5,13 +5,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="resources/js/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="resources/js/index.js"></script>
         <link href="resources/index.css" rel="stylesheet"/>
         <title>Elections</title>
     </head>
     <body>
-        <h1>Elections</h1>
+        <h2>Elections</h2>
         <div class="display">
             <fieldset id="output"><legend>Election current results:</legend>
                 <ul>
@@ -25,10 +25,11 @@
             </fieldset>
             <fieldset>
                 <legend>Simulate Election</legend>
-                <p id="resposta">Vote automatically each
-                    <input type="text" id="vote" /> seconds.
+                <p id="resposta">Votes automatically each 5 secs.</p>
+                <p>
+                    <input type="button" id="vote" value="start simulation" />
+                    <input type="button" id="stop" value="end simulation" />
                 </p>
-                <p><input type="button" id="option" value="Vote" /></p>
                 <p id="mensagem"></p>
             </fieldset>
         </div>
