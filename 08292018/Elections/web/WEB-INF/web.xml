@@ -11,6 +11,6 @@
     </session-config>
     <context-param>
         <param-name>partidos</param-name>
-        <param-value>Partido A, Partido B, Partido C, Partido D, Partido E, Partido F, Partido G, Partido H</param-value>
+        <param-value>Partido A, Partido B, Partido C, Partido D, Partido E, Partido F, Brancos, Nulos</param-value>
     </context-param>
 </web-app>

@@ -2,6 +2,13 @@ var ws;
 
 function changeView(e) {
     console.log(e.data);
+    var lis = $('#output ul');
+    console.log(lis);
+    
+}
+
+function alerta() {
+    console.log(this);
 }
 
 function send() {
@@ -18,13 +25,13 @@ function startSimulation() {
 $(document).ready(function () {
     var vote = $('#vote');
     var stop = $('#stop');
-    
+
     vote.click(function () {
         startSimulation();
         $(this).attr("disabled", "disabled");
         stop.removeAttr("disabled");
     });
-    
+
     stop.click(function () {
         $(this).attr("disabled", "disabled");
         vote.removeAttr("disabled");

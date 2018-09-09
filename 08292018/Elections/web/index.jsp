@@ -17,7 +17,7 @@
                 <ul>
                     <c:forTokens items="${initParam['partidos']}" delims="," var="partido" varStatus="status">
                         <li>${partido} &ndash; <span class="voto">&nbsp;</span><br />
-                            <meter min="0" max="100">&nbsp;</meter> <span class="percent">&nbsp;</span>
+                            <meter min="0" max="100" value="">&nbsp;</meter> <span class="percent">&nbsp;</span>
                         </li>
                     </c:forTokens>
                 </ul>

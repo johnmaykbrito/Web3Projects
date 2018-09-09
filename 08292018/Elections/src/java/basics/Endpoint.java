@@ -6,6 +6,8 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 @ServerEndpoint(value = "/election")
 public class Endpoint {
@@ -15,13 +17,10 @@ public class Endpoint {
     @OnOpen
     public void onOpen(Session session) throws IOException {
         System.out.println("Open");
-        // montar json
-        // retornar json
     }
 
     @OnMessage
-    public void onMessage(Session session, String param) throws IOException {
-        session.getBasicRemote().sendText("Return");
+    public void onMessage(Session session, String param) throws IOException, JSONException {
         for (int i = 0; i < array.length; i++) {
             int x = 1 + (int) (Math.random() * 100);
             switch (i) {
@@ -58,6 +57,10 @@ public class Endpoint {
             str += d + ", ";
         }
         System.out.println(str);
+        // montar json
+        JSONArray json = new JSONArray(array);
+        // retornar json
+        session.getBasicRemote().sendText(json.toString());
     }
 
     @OnClose
