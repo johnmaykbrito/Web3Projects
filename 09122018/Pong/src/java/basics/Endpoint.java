@@ -3,6 +3,7 @@ package basics;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -26,6 +27,7 @@ public class Endpoint {
 
         String room = (String) session.getUserProperties().get("room");
         System.out.println("room: " + room);
+        int size = session.getOpenSessions().size();
         try {
             for (Session s : session.getOpenSessions()) {
                 if (s.isOpen() && room.equals(s.getUserProperties().get("room"))) {
@@ -35,6 +37,11 @@ public class Endpoint {
         } catch (IOException ex) {
             Logger.getLogger(Endpoint.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @OnClose
+    public void onClose(Session session) {
+        System.out.println("FECHOU");
     }
 
 }

@@ -9,6 +9,10 @@
         <link rel="stylesheet" type="text/css" href="index.css"/>
     </head>
     <body>
-        <button id="play" value="play">Jogar</button>
-     </body>
+        <fieldset id="buttons" style="width: 180px; margin: auto" >
+            <button id="player_1" value="play">Player 1</button>
+            <button id="player_2" value="play">Player 2</button>
+            <p>Number of Players: <span id="nop">0</span>.</p>
+        </field>
+    </body>
 </html>
