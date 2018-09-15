@@ -1,5 +1,5 @@
 var canvas;
-function init() {
+function run() {
     canvas = document.querySelector("canvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -7,9 +7,25 @@ function init() {
     // var c stands for context
     var c = canvas.getContext('2d');
     console.log(canvas);
-    
-    window.addEventListener("mousemove", function () {
-        console.log("moving");
+
+    var mouse = {
+        x: undefined,
+        y: undefined
+    };
+
+    var maxRadius = 40;
+
+    window.addEventListener("mousemove", function (event) {
+        console.log(event);
+        mouse.x = event.x;
+        mouse.y = event.y;
+        console.log(mouse);
+    });
+
+    window.addEventListener("resize", function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
     });
 
 //    c.fillStyle = "rgba(255, 0, 0, 0.5)";
@@ -77,16 +93,17 @@ function init() {
         this.y = y;
         this.dy = dy;
         this.radius = radius;
-
+        this.minRadius = radius;
+        this.r = Math.random() * (255 - 0) + 0;
+        this.g = Math.random() * (255 - 0) + 0;
+        this.b = Math.random() * (255 - 0) + 0;
 
         this.draw = function () {
-            var r = Math.random() * (255 - 0) + 0;
-            var g = Math.random() * (255 - 0) + 0;
-            var b = Math.random() * (255 - 0) + 0;
+
             c.beginPath();
             c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false); // args: (x, y, radius, start, end, CW/CCW)
-            c.strokeStyle = "rgba(" + r + ", " + g + ", " + b + ", 1)";
-            c.fillStyle = "rgba(" + r + ", " + g + ", " + b + ", 1)";
+            c.strokeStyle = "rgba(" + this.r + ", " + this.g + ", " + this.b + ", 1)";
+            c.fillStyle = "rgba(" + this.r + ", " + this.g + ", " + this.b + ", 1)";
             c.fill();
             c.stroke();
         };
@@ -104,20 +121,34 @@ function init() {
             this.y += this.dy;
 
             this.draw();
+
+            // interactivity
+            if (mouse.x - this.x < 50 && mouse.x - this.x > -50
+                    && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+                if (this.radius < maxRadius) {
+                    this.radius += 1;
+                }
+            } else if (this.radius > this.minRadius) {
+                this.radius -= 1;
+            }
         };
     }
 
     var circleArray = [];
-
-
-    for (var i = 0; i < 100; i++) {
-        var x = Math.random() * ((innerWidth - 300) - 300) + 300;
-        var dx = (Math.floor(Math.random() * ((innerWidth - 300) - 300) + 300)) % 2 ? -5 : 5;
-        var y = Math.random() * ((innerHeight - 300) - 300) + 300;
-        var dy = (Math.floor(Math.random() * ((innerHeight - 300) - 300) + 300)) % 2 ? -5 : 5;
-        var radius = Math.random() * ((50 - 10) - 10) + 10;
-        circleArray.push(new Circle(x, y, dx, dy, radius));
+    
+    function init() {
+        circleArray = [];
+        for (var i = 0; i < 800; i++) {
+            var x = Math.random() * ((innerWidth - 0) - 0) + 0;
+            var dx = (Math.floor(Math.random() * ((innerWidth - 300) - 300) + 300)) % 2 ? -2 : 2;
+            var y = Math.random() * ((innerHeight - 0) - 0) + 0;
+            var dy = (Math.floor(Math.random() * ((innerHeight - 300) - 300) + 300)) % 2 ? -2 : 2;
+            var radius = Math.random() * ((40 - 10) - 10) + 10;
+            circleArray.push(new Circle(x, y, dx, dy, radius));
+        }
     }
+
+    init();
 
     var piece = new barPiece(50, 50, 2, 2, 15, 20);
 
@@ -132,4 +163,4 @@ function init() {
 
     animate();
 }
-onload = init;
+onload = run;
