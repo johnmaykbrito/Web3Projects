@@ -1,9 +1,9 @@
 var ws;
-var ws2;
 var play;
 var room;
 var sessionCounter;
-var way = [];
+var body;
+var canvasString;
 
 function onClose(evt) {
 //    console.log(evt.data);
@@ -18,14 +18,6 @@ function onMessage(evt) {
     if (evt.data === "2") {
         $('#buttons').hide();
         game();
-    }
-    alert("Alert");
-    if (evt.data < "2") {
-        $('canvas').hide();
-        $('#buttons').show();
-        if (play.attr("disabled") === false) {
-            play.attr("disabled", false);
-        }
     }
 }
 
@@ -44,13 +36,20 @@ function run() {
 
 
 $(document).ready(function () {
-    nop = $('#nop');
-
-    play = $('#play');
-    play.click(function () {
-        play.attr("disabled", true);
-        run();
-    });
+//    body = $('body');
+//    console.log(body);
+//    run();
+    var element = document.getElementById("buttons");
+    var elementHtml = element.outerHTML;
+    console.log(elementHtml);
+    setInterval(function () {
+        if (!document.body.contains(document.getElementsByTagName('canvas')[0])) {
+            console.log("no canvas");
+        } else {
+            canvasString = document.getElementsByTagName('canvas')[0].outerHTML;
+            console.log(canvasString);
+        }
+    }, 500);
 });
 
 function game() {
@@ -314,7 +313,6 @@ function game() {
         canvas = document.createElement("canvas");
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
-        canvas.id = "canvas";
         ctx = canvas.getContext("2d");
         document.body.appendChild(canvas);
         keystate = {};

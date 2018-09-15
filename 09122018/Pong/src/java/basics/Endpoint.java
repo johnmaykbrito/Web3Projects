@@ -12,7 +12,7 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/sessions/{room}")
 public class Endpoint {
-    
+
     static int sessionCounter = 0;
 
     @OnOpen
@@ -27,7 +27,6 @@ public class Endpoint {
 
         String room = (String) session.getUserProperties().get("room");
         System.out.println("room: " + room);
-        int size = session.getOpenSessions().size();
         try {
             for (Session s : session.getOpenSessions()) {
                 if (s.isOpen() && room.equals(s.getUserProperties().get("room"))) {
@@ -38,10 +37,21 @@ public class Endpoint {
             Logger.getLogger(Endpoint.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @OnClose
     public void onClose(Session session) {
         System.out.println("FECHOU");
+        --sessionCounter;
+        String room = (String) session.getUserProperties().get("room");
+        try {
+            for (Session s : session.getOpenSessions()) {
+                if (s.isOpen() && room.equals(s.getUserProperties().get("room"))) {
+                    s.getBasicRemote().sendText(Integer.toString(sessionCounter));
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Endpoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
