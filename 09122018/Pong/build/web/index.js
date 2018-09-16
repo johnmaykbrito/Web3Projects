@@ -4,6 +4,7 @@ var play;
 var room;
 var sessionCounter;
 var sessionDirection = [0, 0];
+var sendCounter = 0;
 
 function onClose(evt) {
 }
@@ -73,12 +74,33 @@ function game() {
     }
 
     function onMessageGame(event) {
-        drawImageBinary(event.data);
+        drawImageText(event.data);
     }
 
-    function sendBinary(bytes) {
-        console.log("sending binary: " + Object.prototype.toString.call(bytes));
-        wsGame.send(bytes);
+    function drawImageText(image) {
+//    console.log("drawImageText");
+        var json = JSON.parse(image);
+        switch (json.item) {
+            case "ball":
+                console.log("eita");
+                ctx.beginPath();
+                ball.x = json.x;
+                ball.y = json.y;
+//                ball.fillRect(json.x, json.y, 10, 10);
+//                ctx.fill();
+                break;
+            case "ai":
+                console.log("ai");
+                ctx.beginPath();
+                ctx.fillRect(json.x, json.y, 10, 10);
+                ctx.fill();
+                break;
+            case "player":
+            default:
+                console.log("ai");
+                ctx.fillRect(json.x, json.y, 10, 10);
+                break;
+        }
     }
 
     /**
@@ -161,13 +183,13 @@ function game() {
             /**
              * Constants
              */
-            WIDTH = 300,
-            HEIGHT = 300,
+            WIDTH = 700,
+            HEIGHT = 600,
             pi = Math.PI,
-            UpArrow = 38,
-            DownArrow = 40,
             wArrow = 87,
             sArrow = 83,
+            UpArrow = 38,
+            DownArrow = 40,
             /**
              * Game elements
              */
@@ -189,10 +211,28 @@ function game() {
                  * Update the position depending on pressed keys
                  */
                 update: function () {
-                    if (keystate[UpArrow])
+                    if (keystate[wArrow]) {
                         this.y -= 7;
-                    if (keystate[DownArrow])
+                        var json = JSON.stringify({
+                            "item": "player",
+                            "x": 20,
+                            "y": this.y
+                        });
+
+                        wsGame.send(json);
+
+                    }
+                    if (keystate[sArrow]) {
                         this.y += 7;
+                        var json = JSON.stringify({
+                            "item": "player",
+                            "x": 20,
+                            "y": this.y
+                        });
+
+                        wsGame.send(json);
+
+                    }
                     // keep the paddle inside of the canvas
                     this.y = Math.max(Math.min(this.y, HEIGHT - this.height), 0);
                 },
@@ -218,10 +258,24 @@ function game() {
                  * Update the position depending on the ball position
                  */
                 update: function () {
-                    if (keystate[wArrow])
+                    if (keystate[UpArrow]) {
                         this.y -= 7;
-                    if (keystate[sArrow])
+                        var json = JSON.stringify({
+                            "item": "ai",
+                            "x": WIDTH - 20,
+                            "y": this.y
+                        });
+                        wsGame.send(json);
+                    }
+                    if (keystate[DownArrow]) {
                         this.y += 7;
+                        var json = JSON.stringify({
+                            "item": "ai",
+                            "x": WIDTH - 20,
+                            "y": this.y
+                        });
+                        wsGame.send(json);
+                    }
                     // keep the paddle inside of the canvas
                     this.y = Math.max(Math.min(this.y, HEIGHT - this.height), 0);
                 },
@@ -279,6 +333,21 @@ function game() {
                         // mirror the y velocity
                         this.vel.y *= -1;
                     }
+                    var json = JSON.stringify({
+                        "item": "ball",
+                        "x": this.x,
+                        "y": this.y
+                    });
+
+                    if (sendCounter === 0) {
+                        setTimeout(function () {
+                            wsGame.send(json);
+                            sendCounter++;
+                        }, 50);
+                    } else {
+                        wsGame.send(json);
+                    }
+
                     // helper function to check intesectiont between two
                     // axis aligned bounding boxex (AABB)
                     var AABBIntersect = function (ax, ay, aw, ah, bx, by, bw, bh) {
@@ -371,7 +440,6 @@ function game() {
             update();
             draw();
             window.requestAnimationFrame(loop, canvas);
-            defineImageBinary();
         };
         window.requestAnimationFrame(loop, canvas);
     }
@@ -394,32 +462,6 @@ function game() {
         ball.update();
         player.update();
         ai.update();
-    }
-
-    function defineImageBinary() {
-        var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        var buffer = new ArrayBuffer(image.data.length);
-        var bytes = new Uint8Array(buffer);
-        for (var i = 0; i < bytes.length; i++) {
-            bytes[i] = image.data[i];
-        }
-        sendBinary(buffer);
-    }
-
-    function drawImageBinary(blob) {
-        var bytes = new Uint8Array(blob);
-//    console.log('drawImageBinary (bytes.length): ' + bytes.length);
-
-        var imageData = ctx.createImageData(canvas.width, canvas.height);
-
-        for (var i = 8; i < imageData.data.length; i++) {
-            imageData.data[i] = bytes[i];
-        }
-        ctx.putImageData(imageData, 0, 0);
-        var img = document.createElement('img');
-        img.height = canvas.height;
-        img.width = canvas.width;
-        img.src = canvas.toDataURL();
     }
 
     /**
