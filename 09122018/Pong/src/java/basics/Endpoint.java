@@ -40,7 +40,7 @@ public class Endpoint {
 
     @OnClose
     public void onClose(Session session) {
-        System.out.println("FECHOU");
+        System.out.println("FECHOU: " + session.getId());
         --sessionCounter;
         String room = (String) session.getUserProperties().get("room");
         try {

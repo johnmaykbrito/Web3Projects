@@ -1,8 +1,11 @@
 package basics;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.nio.ByteBuffer;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -10,22 +13,26 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/game")
 public class Endpoint1 {
+    
+    private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
 
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(Session peer) {
+        peers.add(peer);
+    }
+    
+    @OnClose
+    public void onClose(Session peer) {
+        peers.remove(peer);
     }
 
     @OnMessage
-    public void onMessage(Session session, String text) {
-        System.out.println("text: " + text);
-        try {
-            for (Session s : session.getOpenSessions()) {
-                if (s.isOpen()) {
-                    s.getBasicRemote().sendText(text);
-                }
+    public void broadcastSnapshot(ByteBuffer data, Session session) throws IOException {
+        System.out.println("broadcastBinary: " + data);
+        for (Session peer : peers) {
+            if (!peer.equals(session)) {
+                peer.getBasicRemote().sendBinary(data);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(Endpoint1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

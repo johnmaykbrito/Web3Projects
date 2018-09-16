@@ -19,7 +19,7 @@ function onMessage(evt) {
         $('#buttons').hide();
         game();
     }
-    
+
     var a = sessionDirection[1] = sessionDirection[0];
     var b = sessionDirection[0] = evt.data;
     console.log("sessionDirection: [" + sessionDirection + "]");
@@ -57,7 +57,30 @@ $(document).ready(function () {
     });
 });
 
+
 function game() {
+
+
+
+    var wsUriGame = "ws://" + document.location.host + document.location.pathname + "game";
+    var wsGame = new WebSocket(wsUriGame);
+    wsGame.onopen = onOpenGame;
+    wsGame.onmessage = onMessageGame;
+    wsGame.binaryType = "arraybuffer";
+
+    function onOpenGame() {
+        console.log("open");
+    }
+
+    function onMessageGame(event) {
+        drawImageBinary(event.data);
+    }
+
+    function sendBinary(bytes) {
+        console.log("sending binary: " + Object.prototype.toString.call(bytes));
+        wsGame.send(bytes);
+    }
+
     /**
      * Scoreboard stuff
      *  _   0
@@ -138,8 +161,8 @@ function game() {
             /**
              * Constants
              */
-            WIDTH = 700,
-            HEIGHT = 600,
+            WIDTH = 300,
+            HEIGHT = 300,
             pi = Math.PI,
             UpArrow = 38,
             DownArrow = 40,
@@ -348,6 +371,7 @@ function game() {
             update();
             draw();
             window.requestAnimationFrame(loop, canvas);
+            defineImageBinary();
         };
         window.requestAnimationFrame(loop, canvas);
     }
@@ -371,6 +395,33 @@ function game() {
         player.update();
         ai.update();
     }
+
+    function defineImageBinary() {
+        var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var buffer = new ArrayBuffer(image.data.length);
+        var bytes = new Uint8Array(buffer);
+        for (var i = 0; i < bytes.length; i++) {
+            bytes[i] = image.data[i];
+        }
+        sendBinary(buffer);
+    }
+
+    function drawImageBinary(blob) {
+        var bytes = new Uint8Array(blob);
+//    console.log('drawImageBinary (bytes.length): ' + bytes.length);
+
+        var imageData = ctx.createImageData(canvas.width, canvas.height);
+
+        for (var i = 8; i < imageData.data.length; i++) {
+            imageData.data[i] = bytes[i];
+        }
+        ctx.putImageData(imageData, 0, 0);
+        var img = document.createElement('img');
+        img.height = canvas.height;
+        img.width = canvas.width;
+        img.src = canvas.toDataURL();
+    }
+
     /**
      * Clear canvas and draw all game objects and net
      */
