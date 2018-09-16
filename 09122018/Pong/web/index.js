@@ -179,7 +179,7 @@ function game() {
             setTimeout(win, 200);
             
             function win() {
-                alert("Player 1 Ganhou");
+                alert("Player 1 (Azul) Ganhou");
                 location.reload();
             }
         }
@@ -188,7 +188,7 @@ function game() {
             setTimeout(win, 200);
             
             function win() {
-                alert("Player 2 Ganhou");
+                alert("Player 2 (Vermelho) Ganhou");
                 location.reload();
             }
         }
@@ -254,6 +254,7 @@ function game() {
                  * Draw the player paddle to the canvas
                  */
                 draw: function () {
+                    ctx.fillStyle = "blue";
                     ctx.fillRect(this.x, this.y, this.width, this.height);
                 }
             },
@@ -298,7 +299,9 @@ function game() {
                  * Draw the ai paddle to the canvas
                  */
                 draw: function () {
+                    ctx.fillStyle = "red";
                     ctx.fillRect(this.x, this.y, this.width, this.height);
+                    ctx.fillStyle = "#fff";
                 }
             },
             /**	
