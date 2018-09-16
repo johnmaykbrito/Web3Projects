@@ -6,15 +6,9 @@ var sessionCounter;
 var sessionDirection = [0, 0];
 var sendCounter = 0;
 
-function onClose(evt) {
-}
-
 function onMessage(evt) {
 
     sessionCounter = evt.data;
-    if (sessionCounter === "2") {
-        console.log("Session Counter: " + sessionCounter);
-    }
 
     if (evt.data === "2") {
         $('#buttons').hide();
@@ -23,7 +17,6 @@ function onMessage(evt) {
 
     var a = sessionDirection[1] = sessionDirection[0];
     var b = sessionDirection[0] = evt.data;
-    console.log("sessionDirection: [" + sessionDirection + "]");
     if (evt.data < "2") {
         $('canvas').hide();
         $('svg').hide();
@@ -43,7 +36,6 @@ function run() {
     ws = new WebSocket(wsUri);
     ws.onopen = onOpen;
     ws.onmessage = onMessage;
-    ws.onclose = onClose;
 }
 
 
@@ -62,37 +54,28 @@ $(document).ready(function () {
 function game() {
     var wsUriGame = "ws://" + document.location.host + document.location.pathname + "game";
     var wsGame = new WebSocket(wsUriGame);
-    wsGame.onopen = onOpenGame;
     wsGame.onmessage = onMessageGame;
     wsGame.binaryType = "arraybuffer";
-
-    function onOpenGame() {
-        console.log("open");
-    }
 
     function onMessageGame(event) {
         drawImageText(event.data);
     }
 
     function drawImageText(image) {
-//    console.log("drawImageText");
         var json = JSON.parse(image);
         switch (json.item) {
             case "ball":
-                console.log("eita");
                 ctx.beginPath();
                 ball.x = json.x;
                 ball.y = json.y;
                 break;
             case "ai":
-                console.log("ai");
                 ctx.beginPath();
                 ai.x = json.x;
                 ai.y = json.y;
                 break;
             case "player":
             default:
-                console.log("player");
                 player.x = json.x;
                 player.y = json.y;
                 break;
@@ -403,23 +386,6 @@ function game() {
                     ctx.fillRect(this.x, this.y, this.side, this.side);
                 }
             };
-    function requestFullscreen() {
-        console.log(canvas);
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen();
-        } else if (canvas.msRequestFullscreen) {
-            canvas.msRequestFullscreen();
-        } else if (canvas.mozRequestFullScreen) {
-            canvas.mozRequestFullScreen();
-        } else if (canvas.webkitRequestFullscreen) {
-            canvas.webkitRequestFullscreen();
-        }
-        window.onresize = function () {
-            canvas.width = WIDTH = window.innerWidth;
-            canvas.height = HEIGHT = window.innerHeight;
-            init();
-        }
-    }
     /**
      * Starts the game
      */
@@ -450,9 +416,6 @@ function game() {
         }
         canvas.addEventListener("touchmove", touchevt);
         canvas.addEventListener("touchstart", touchevt);
-        var d = document.createElement("div");
-        d.innerHTML = '<svg onclick="requestFullscreen()"width="20" height="16" opacity="0.5"><path d="M0 5v-5h5m10 0h5v5m0 6v5h-5m-10 0h-5v-5M6 6h8v4h-8z"style="fill:none;stroke:#000;stroke-width:4"></path></svg>';
-        document.body.appendChild(d);
         // game loop function
         var loop = function () {
             update();
