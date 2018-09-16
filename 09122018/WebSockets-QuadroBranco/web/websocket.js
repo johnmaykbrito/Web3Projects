@@ -18,9 +18,9 @@ function sendBinary(bytes) {
 function onMessage(evt) {
     console.log("received: " + evt.data);
     if (typeof evt.data === "string") {
-        drawImageText(evt.data);
+        drawImageText(evt.data); // In other JS file
     } else {
-        drawImageBinary(evt.data);
+        drawImageBinary(evt.data);  // In other JS file
     }
 }
 

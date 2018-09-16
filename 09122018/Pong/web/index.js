@@ -3,28 +3,32 @@ var ws2;
 var play;
 var room;
 var sessionCounter;
-var way = [];
+var sessionDirection = [0, 0];
 
 function onClose(evt) {
-//    console.log(evt.data);
-//    console.log("desgraça");
 }
 
 function onMessage(evt) {
 
     sessionCounter = evt.data;
-    console.log(sessionCounter);
+    if (sessionCounter === "2") {
+        console.log("Session Counter: " + sessionCounter);
+    }
 
     if (evt.data === "2") {
         $('#buttons').hide();
         game();
     }
-    alert("Alert");
+    
+    var a = sessionDirection[1] = sessionDirection[0];
+    var b = sessionDirection[0] = evt.data;
+    console.log("sessionDirection: [" + sessionDirection + "]");
     if (evt.data < "2") {
         $('canvas').hide();
+        $('svg').hide();
         $('#buttons').show();
-        if (play.attr("disabled") === false) {
-            play.attr("disabled", false);
+        if (b < a) {
+            location.reload();
         }
     }
 }
