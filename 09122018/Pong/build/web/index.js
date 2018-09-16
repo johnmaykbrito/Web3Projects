@@ -174,6 +174,24 @@ function game() {
             ctx.translate(size + padding, 0);
         }
         ctx.restore();
+        if (player.score === 5) {
+            
+            setTimeout(win, 200);
+            
+            function win() {
+                alert("Player 1 Ganhou");
+                location.reload();
+            }
+        }
+        if (ai.score === 5) {
+            
+            setTimeout(win, 200);
+            
+            function win() {
+                alert("Player 2 Ganhou");
+                location.reload();
+            }
+        }
     }
     var
             /**
@@ -258,7 +276,7 @@ function game() {
                         this.y -= 7;
                         var json = JSON.stringify({
                             "item": "ai",
-                            "x": WIDTH - 20,
+                            "x": WIDTH - 40,
                             "y": this.y
                         });
                         wsGame.send(json);
@@ -267,9 +285,10 @@ function game() {
                         this.y += 7;
                         var json = JSON.stringify({
                             "item": "ai",
-                            "x": WIDTH - 20,
+                            "x": WIDTH - 40,
                             "y": this.y
                         });
+
                         wsGame.send(json);
                     }
                     // keep the paddle inside of the canvas
