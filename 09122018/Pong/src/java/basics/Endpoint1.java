@@ -3,6 +3,7 @@ package basics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import javax.json.JsonString;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -27,10 +28,28 @@ public class Endpoint1 {
 
     @OnMessage
     public void broadcastFigure(Figure figure, Session session) throws IOException, EncodeException {
-//        System.out.println("broadcastFigure: " + figure);
-        for (int i = 0; i < 2; i++) {
-            if (peers.get(0).equals(session)) {
-                peers.get(1).getBasicRemote().sendObject(figure);
+        JsonString str = figure.getJson().getJsonString("item");
+        if (str.getString().equals("ball")) {
+            for (int i = 0; i < 2; i++) {
+                if (peers.get(0).equals(session)) {
+                    peers.get(1).getBasicRemote().sendObject(figure);
+                }
+            }
+        }
+
+        if (str.getString().equals("player")) {
+            for (int i = 0; i < 2; i++) {
+                if (peers.get(0).equals(session)) {
+                    peers.get(1).getBasicRemote().sendObject(figure);
+                }
+            }
+        }
+
+        if (str.getString().equals("ai")) {
+            for (int i = 0; i < 2; i++) {
+                if (peers.get(1).equals(session)) {
+                    peers.get(0).getBasicRemote().sendObject(figure);
+                }
             }
         }
     }

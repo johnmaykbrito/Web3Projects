@@ -60,9 +60,6 @@ $(document).ready(function () {
 
 
 function game() {
-
-
-
     var wsUriGame = "ws://" + document.location.host + document.location.pathname + "game";
     var wsGame = new WebSocket(wsUriGame);
     wsGame.onopen = onOpenGame;
@@ -86,19 +83,18 @@ function game() {
                 ctx.beginPath();
                 ball.x = json.x;
                 ball.y = json.y;
-//                ball.fillRect(json.x, json.y, 10, 10);
-//                ctx.fill();
                 break;
             case "ai":
                 console.log("ai");
                 ctx.beginPath();
-                ctx.fillRect(json.x, json.y, 10, 10);
-                ctx.fill();
+                ai.x = json.x;
+                ai.y = json.y;
                 break;
             case "player":
             default:
-                console.log("ai");
-                ctx.fillRect(json.x, json.y, 10, 10);
+                console.log("player");
+                player.x = json.x;
+                player.y = json.y;
                 break;
         }
     }
