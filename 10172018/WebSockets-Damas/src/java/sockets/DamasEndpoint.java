@@ -24,8 +24,8 @@ public class DamasEndpoint {
         } else if (s2 == null) {
             tabuleiro = new Tabuleiro();
             s2 = session;
-            s2.getBasicRemote().sendText("{\"type\": 0, \"color\": 1}");
-            sendMessage("{\"type\": 1, \"tabuleiro\": " + tabuleiro + ", \"turn\": 0}");
+            s2.getBasicRemote().sendText("{\"type\": 0, \"color\": 1}"); // envia uma mensagem e executa case 0
+            sendMessage("{\"type\": 1, \"tabuleiro\": " + tabuleiro + ", \"turn\": 0}"); // envia uma mensagem e executa case 1
         } else {
             session.close();
         }

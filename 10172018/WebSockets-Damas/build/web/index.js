@@ -7,6 +7,7 @@ function coordinates(cell) {
 function drag(ev) {
     ev.dataTransfer.effectAllowed = 'move';
     ev.dataTransfer.setData("text/plain", "[" + coordinates(this.parentNode) + "]");
+    console.log("[" + coordinates(this.parentNode) + "]");
 }
 function allowDrop(ev) {
     ev.preventDefault();
@@ -44,6 +45,9 @@ function montarTabela(tabuleiro) {
     tabuleiro.forEach(function (row, rowIndex) {
         row.forEach(function (col, colIndex) {
             var cell = table.rows[rowIndex].cells[colIndex];
+//            console.log("rowIndex["+rowIndex+"], colIndex["+colIndex+"]");
+//            console.log("row["+row+"]");            
+//            console.log("col["+col+"]");
             cell.innerHTML = (col === 0 ? "" : (col === 1 ? '<img src="imagens/Pedra-Branca.svg" alt="">' : '<img src="imagens/Pedra-Preta.svg" alt="">'));
             var x = cell.firstChild;
             if (x) {
