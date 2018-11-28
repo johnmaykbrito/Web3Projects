@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>#{msgs.loginTitle}</title>        
+    </h:head>
+    <h:body>
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+            <!-- Contents to be decorated -->
+            <h:form>
+                <h:panelGrid columns="2">
+                    #{msgs.namePrompt}
+                    <h:inputText id="name" value="#{user.name}"/>
+                    #{msgs.passwordPrompt}
+                    <h:inputSecret id="password" value="#{user.password}"/>
+                </h:panelGrid>
+                <p>
+                    <h:commandButton value="#{msgs.loginButtonText}"
+                                     action="planetarium"/>
+                </p>
+            </h:form>
+        </ui:decorate>
+    </h:body>
+</html>
