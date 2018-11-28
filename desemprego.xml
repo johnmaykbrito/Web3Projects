@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <description>Dados de desemprego do IBGE 2010. Atributo 'valor' indica o 
+        valor médio do desemprego no estado. O elemento 'pleno' indica o 
+        percentual de municípios com pleno emprego (abaixo de 3,5%); 'abaixo', abaixo da média e
+        'acima', acima da média nacional (7,6%).
+    </description>
+    <estado id="df" valor="8.2"/>
+    <estado id="sc" valor="3.8">
+        <pleno>72</pleno>
+        <abaixo>25</abaixo>
+        <acima>2</acima>
+    </estado>
+    <estado id="rs" valor="4.9">
+        <pleno>69</pleno>
+        <abaixo>28</abaixo>
+        <acima>3</acima>
+    </estado>
+    <estado id="pr" valor="5">
+        <pleno>30</pleno>
+        <abaixo>65</abaixo>
+        <acima>5</acima>
+    </estado>
+    <estado id="ro" valor="5.5">
+        <pleno>21</pleno>
+        <abaixo>75</abaixo>
+        <acima>4</acima>
+    </estado>
+    <estado id="ms" valor="6.2">
+        <pleno>12</pleno>
+        <abaixo>73</abaixo>
+        <acima>15</acima>
+    </estado>
+    <estado id="go" valor="6.3">
+        <pleno>12</pleno>
+        <abaixo>61</abaixo>
+        <acima>27</acima>
+    </estado>
+    <estado id="mt" valor="6.3">
+        <pleno>15</pleno>
+        <abaixo>65</abaixo>
+        <acima>21</acima>
+    </estado>
+    <estado id="mg" valor="6.8">
+        <pleno>19</pleno>
+        <abaixo>52</abaixo>
+        <acima>29</acima>
+    </estado>
+    <estado id="es" valor="7.3">
+        <pleno>28</pleno>
+        <abaixo>42</abaixo>
+        <acima>29</acima>
+    </estado>
+    <estado id="to" valor="7.4">
+        <pleno>6</pleno>
+        <abaixo>53</abaixo>
+        <acima>41</acima>
+    </estado>
+    <estado id="sp" valor="7.6">
+        <pleno>9</pleno>
+        <abaixo>61</abaixo>
+        <acima>30</acima>
+    </estado>
+    <estado id="ce" valor="7.7">
+        <pleno>3</pleno>
+        <abaixo>54</abaixo>
+        <acima>43</acima>
+    </estado>
+    <estado id="rr" valor="7.7">
+        <pleno>7</pleno>
+        <abaixo>60</abaixo>
+        <acima>33</acima>
+    </estado>
+    <estado id="pi" valor="7.9">
+        <pleno>13</pleno>
+        <abaixo>50</abaixo>
+        <acima>37</acima>
+    </estado>
+    <estado id="ac" valor="8">
+        <pleno>14</pleno>
+        <abaixo>64</abaixo>
+        <acima>23</acima>
+    </estado>
+    <estado id="rj" valor="8.5">
+        <pleno>1</pleno>
+        <abaixo>34</abaixo>
+        <acima>65</acima>
+    </estado>
+    <estado id="pb" valor="8.6">
+        <pleno>11</pleno>
+        <abaixo>52</abaixo>
+        <acima>36</acima>
+    </estado>
+    <estado id="ma" valor="8.7">
+        <pleno>7</pleno>
+        <abaixo>51</abaixo>
+        <acima>42</acima>
+    </estado>
+    <estado id="pa" valor="9.2">
+        <pleno>4</pleno>
+        <abaixo>50</abaixo>
+        <acima>46</acima>
+    </estado>
+    <estado id="am" valor="9.7">
+        <pleno>5</pleno>
+        <abaixo>48</abaixo>
+        <acima>47</acima>
+    </estado>
+    <estado id="rn" valor="9.9">
+        <pleno>7</pleno>
+        <abaixo>31</abaixo>
+        <acima>63</acima>
+    </estado>
+    <estado id="se" valor="10.3">
+        <pleno>5</pleno>
+        <abaixo>37</abaixo>
+        <acima>57</acima>
+    </estado>
+    <estado id="al" valor="10.7">
+        <pleno>11</pleno>
+        <abaixo>28</abaixo>
+        <acima>61</acima>
+    </estado>
+    <estado id="ba" valor="10.9">
+        <pleno>1</pleno>
+        <abaixo>35</abaixo>
+        <acima>64</acima>
+    </estado>
+    <estado id="pe" valor="11.1">
+        <pleno>9</pleno>
+        <abaixo>36</abaixo>
+        <acima>55</acima>
+    </estado>
+    <estado id="ap" valor="11.9">
+        <pleno>0</pleno>
+        <abaixo>12</abaixo>
+        <acima>88</acima>
+    </estado>
+</root>
